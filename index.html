@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Capitalize Text</title>
+	<link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+	<h1>Capitalize Text</h1>
+	<label for="text">Enter text:</label>
+	<input type="text" id="text" name="text">
+	<button onclick="sendData()">Send</button>
+	<br>
+	<h2>Result:</h2>
+	<h1 id="result"></h1>
+
+	<script>
+		// Defining an async function to send data to the server
+		async function sendData() {
+
+			// Extracting the input text value from the HTML element with id 'text'
+			const text = document.getElementById("text").value;
+
+			// Sending a POST request to the server at 'http://localhost:3000/capitalize' with the input text as a JSON payload
+			const response = await fetch('http://localhost:3000/capitalize', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ text: text })
+			});
+
+			// Parsing the JSON response from the server
+			const result = await response.json();
+
+			// Updating the HTML element with id 'result' with the capitalized text received from the server
+			document.getElementById("result").innerHTML = result.capitalizedText;
+		}
+		/*This code defines an async function 'sendData' that extracts the input text value from the HTML
+			element with id 'text'. It then sends a POST request to the server at
+				'http://localhost:3000/capitalize' with the input text as a JSON payload. 
+				The server will then respond with a JSON object containing the capitalized text.
+				The code parses the JSON response from the server and updates the HTML element with id 
+				'result' with the capitalized text received from the server. This code can be used to
+				interact with the '/capitalize' route of the server and capitalize input text.
+   */
+	</script>
+</body>
+
+</html>
